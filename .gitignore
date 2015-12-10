@@ -161,3 +161,4 @@ Backup[ ]of[ ]*.numbers/
 .DS_Store
 
 Thumbs.db
+/.project
