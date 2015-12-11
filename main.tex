@@ -1,41 +1,42 @@
-\documentclass{beamer} 
+\documentclass[10pt, aspectratio=169]{beamer} %Tamanho da fonte alterado de 12pt (eu acho) para 10pt
 
-\usetheme{metropolis}
+\usetheme{metropolis} % Tema Utilizado
+
+%\renewcommand{\raggedright}{\leftskip=0pt \rightskip=0pt plus 0cm} % Justificação global do texto
 
 %\setbeamertemplate{items}[square]
 %\setbeamertemplate{caption}[numbered]
 \usepackage{xkeyval}
-\usepackage{todonotes}
-\presetkeys{todonotes}{inline}{}
+\usepackage{todonotes} % Notas
+\presetkeys{todonotes}{inline}{} % Notas em linha
 \usepackage{helvet}
 \renewcommand{\familydefault}{\sfdefault}
-\usepackage{float}
 \usepackage[brazil]{babel} %fonte
 \usepackage[utf8]{inputenc} %codificação
-\usepackage{graphicx}
-\usepackage{url}
+\usepackage{graphicx} % Pacote para gráficos e imagens
+\usepackage{url} % colocar links
 \usepackage{float}     % para forçar a localizaçao das figuras (usando H no posicionamento, =Here)
-\usepackage{subfigure}
+\usepackage{subfigure}  % Adição de subfiguras numa mesma legenda
 \usepackage{mathtools} % setas com texto
-\usepackage{multicol}
+\usepackage{multicol} % multicolunas num único slide
 %\usepackage{listingsutf8}
-\usepackage{minted}
+\usepackage{minted} % Highlight de codigos
 \usepackage{scalefnt}
 \usepackage{ragged2e}
 \usepackage{etoolbox, verbatim}
-\usepackage{xcolor}
-\usepackage{colortbl}%colorir tabelas
-\usepackage{pbox}%quebrar linha em uma célula da tabela
-\usepackage{changepage}%mover a tabela pra esquerda
+\usepackage{xcolor} % Pacote para uso de cores
+\usepackage{colortbl} % colorir tabelas
+\usepackage{pbox} % quebrar linha em uma célula da tabela
+\usepackage{changepage} %mover a tabela pra esquerda
 \usepackage{booktabs}
-\usepackage{multirow}
+\usepackage{multirow} % Multilinhas para uso em tabelas
 \usepackage{pgfplots}
 \usepgfplotslibrary{dateplot}
 \usepackage{xspace}
 \newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
 
-\setcounter{tocdepth}{2}
-\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2} % Profundidade nas seções do TOC
+\setcounter{secnumdepth}{3} % Profundidade nas seções?????
 \setbeamertemplate{section in toc}[sections numbered]
 
 \definecolor{mygray}{rgb}{0.4,0.4,0.4}
@@ -46,7 +47,7 @@
 \let\olditem=\item% 
 \renewcommand{\item}{\olditem \justifying}%
 
-\title[OpenMP]{Arquiteturas Paralelas e OpenMP}
+\title[Arquiteturas Paralelas e OpenMP]{Arquiteturas Paralelas e OpenMP}
 \author[Ramos; Guimarães]{Natanael Ramos \\Rodolfo Labiapari Mansur Guimarães}
 \institute[IFMG]{\begin{figure}
 			\centering
