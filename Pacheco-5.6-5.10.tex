@@ -1,4 +1,4 @@
-%				\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=5, tabsize=3, frame=lines, framesep=2mm, fontsize=\tiny]{vhdl}
+%				\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=5, tabsize=3, frame=lines, framesep=2mm, fontsize=\tiny]{vhdl}
 %					entity permutedChoice1 is
 %						port(
 %							-- Chave inicial
@@ -14,7 +14,7 @@
 		%5.6.1
 		\subsubsection{Bubble Sort}
 	\begin{frame}[fragile]{Bubble Sort}
-		\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
 			for (list_length = n; list_length >= 2; list_length) 
 				for (i = 0; i < list_length - 1; i++)
 					if (a[i] > a[i+1]) { 
@@ -23,7 +23,7 @@
 						a[i+1] = tmp;
 					}
 		\end{minted}
-			\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=4, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
+			\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=4, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
 				for (list_length = n; list_length >= 2; list_length) 
 					for (i = 0; i < list_length - 1; i++)
 						if (a[i] > a[i+1]) { 
@@ -51,7 +51,7 @@
 
 
 	\begin{frame}[fragile]{Bubble Sort - Loop-Carried Dependence}
-		\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
 			for (list_length = n; list_length >= 2; list_length) 
 				for (i = 0; i < list_length 1; i++)
 					if (a[i] > a[i+1]) { 
@@ -94,7 +94,7 @@
 
 	%5.6.2
 	\begin{frame}[fragile]{Odd-Even Transposition Sort }
-		\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
 			for (phase = 0; phase < n; phase++) 
 				if (phase % 2 == 0)
 					for (i = 1; i < n; i += 2)
@@ -118,7 +118,7 @@
 
 	\begin{frame}[fragile]{Odd-Even Transposition Sort }
 		\begin{multicols}{2}
-			\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
+			\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
 			for (phase = 0; phase < n; phase++) 
 				if (phase % 2 == 0)
 					for (i = 1; i < n; i += 2)
@@ -137,7 +137,7 @@
 \end{frame}
 
 	\begin{frame}[fragile]{Odd-Even Transposition Sort - Loop-Carried Dependence}
-		\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
 			for (phase = 0; phase < n; phase++) 
 				if (phase % 2 == 0)
 					for (i = 1; i < n; i += 2)
@@ -185,7 +185,7 @@
 
 
 	\begin{frame}[fragile]{Odd-Even Transposition Sort - Implementação 1}
-		\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\scriptsize]{c}
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\scriptsize]{c}
 			for (phase = 0; phase < n; phase++) { 
 				if (phase % 2 == 0)
 			#		pragma omp parallel for num_threads(thread_count) \ 
@@ -212,8 +212,8 @@
 
 
 	\begin{frame}[fragile]{Odd-Even Transposition Sort - Implementação 2}
-		\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\scriptsize]{c}
-			# 	pragma omp parallel num threads(thread count) \ 
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\scriptsize]{c}
+			# 	pragma omp parallel num_threads(thread_count) \ 
 					default(none) shared(a, n) private(i, tmp, phase)
 			for (phase = 0; phase < n; phase++) { 
 				if (phase % 2 == 0)
@@ -276,7 +276,7 @@
 			\end{itemize}
 			\item Existem inúmeras situações onde isso seria muito pouco ideal.
 		\end{itemize}
-		\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
 			sum = 0.0;
 			for (i = 0; i <= n; i++) 
 				sum += f(i);
@@ -314,7 +314,7 @@
 		\begin{itemize}
 			\item Para ter noção de como isso afeta a performance, tem-se o seguinte programa
 		\end{itemize}
-		\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\scriptsize]{c}
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\scriptsize]{c}
 			double f(int i) {
 				int j, start = i*(i+1)/2, finish = start + i;
 				double return_val = 0.0;
@@ -344,7 +344,7 @@
 		\begin{itemize}
 			\item Escalonamento padrão usa-se a cláusula {\tt reduction} com algum {\tt for}.
 		\end{itemize}
-		\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
 			sum = 0.0;
 			# pragma omp parallel for num_threads(thread_count) \
 				reduction(+:sum)		
@@ -356,7 +356,7 @@
 			\item Para um escalonamento cíclico utiliza-se a cláusula {\tt schedule}
 		\end{itemize}
 		
-		\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
 			sum = 0.0;
 			# pragma omp parallel for num_threads(thread_count) \
 				reduction(+:sum) schedule(static.1)
@@ -532,7 +532,7 @@
 	\end{frame}
 
 	\begin{frame}[fragile]{Troca de Mensagem -  Pseudocódigo}
-		\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\normalsize]{c}
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\normalsize]{c}
 			for (sent_msgs = 0; sent_msgs < send_max; sent_msgs++) { 
 				Send_msg();
 				Try_receive();
@@ -549,7 +549,7 @@
 			\item Por mais que não olhemos os detalhes da implementação da fila, deve-se tomar medidas de prevenção usando seção crítica.
 			\item Pseudocódigo do {\tt Send\_msg()}
 		\end{itemize}
-		\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\normalsize]{c}
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\normalsize]{c}
 			mesg = random();
 			dest = random() % thread_count;
 			#	pragma omp critical
@@ -571,7 +571,7 @@
 			\item Mas, e a variável que armazena o tamanho da lista?
 			\item Tem-se 2 variáveis com o número de mensagens
 		\end{itemize}
-		\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\normalsize]{c}
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\normalsize]{c}
 			queue_size = enqueued - dequeued
 		\end{minted}
 		\begin{itemize}
@@ -584,7 +584,7 @@
 		\begin{itemize}
 			\item Assim, o {\tt Try\_receive} será implementado
 		\end{itemize}
-		\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\normalsize]{c}
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\normalsize]{c}
 			queue_size = enqueued - dequeued;
 
 			if (queue_size == 0) 
@@ -617,7 +617,7 @@
 				\item Para isso, utiliza um {\tt done\_sending} que será incrementado a cada finaliação de envio das threads. Permitindo a implementação
 			\end{itemize}
 		\columnbreak
-			\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=4, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
+			\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=4, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
 				queue_size = enqueued - dequeued; 
 
 				if (queue_size == 0)
@@ -625,7 +625,7 @@
 				else return FALSE;
 			\end{minted}
 					\pause
-			\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=4, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
+			\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=4, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
 				queue_size = enqueued - dequeued; 
 
 				if (queue_size == 0 && 
@@ -693,7 +693,7 @@
 			\item A expressão não está inclusa na seção crítica. Somente a atribuição do resultado dela à variável que está.
 		\end{itemize}
 
-		\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
 			#	pragma omp atomic
 				x += y++;
 		\end{minted}
@@ -737,7 +737,7 @@
 			\item Lock consistem de estruturas de dados e funções que permitem o programador explicitar a exclusão mútua numa seção crítica.
 			\item O uso do lock pode ser descrito pelo seguinte pseudocódigo:
 		\end{itemize}
-		\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\scriptsize]{c}
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\scriptsize]{c}
 			/* Executed by one thread */
 			Initialize the lock data structure;
 			...
@@ -787,7 +787,7 @@
 				\item Nested: Pode ser definido múltilas vezes pela mesma thread antes do `des-set'.
 			\end{itemize}
 			\item Um tipo de OpenMP simple lock é o {\tt omp\_lock\_t}, e e possui as funções de definição:
-			\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=4, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
+			\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=4, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
 				void omp_init_lock(omp_lock_t *    lock_p /* out */);
 				void omp_set_lock(omp_lock_t *     lock_p /* in/out */); 
 				void omp_unset_lock(omp_lock_t *   lock_p /* in/out */);  
@@ -805,7 +805,7 @@
 		\end{itemize}
 
 		\begin{multicols}{2}
-				\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=5, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
+				\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=5, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
 					#	pragma omp critical
 						/*q_p = msg_queues[dest]*/
 						Enqueue(q_p, my_rank, mesg);
@@ -813,14 +813,14 @@
 			\begin{itemize}
 				\item Por
 			\end{itemize}
-				\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=5, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
+				\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=5, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
 						/*q_p = msg_queues[dest]*/
 						omp_set_lock(&q_p->lock);
 						Enqueue(q_p, my_rank, mesg);
 						omp_unset_lock(&q_p->lock);
 				\end{minted}
 		\columnbreak
-				\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=5, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
+				\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=5, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
 					#	pragma omp critical
 						/*q_p = msg_queues[my_rank]*/
 						Dequeue(q_p, &src, &mesg);
@@ -828,7 +828,7 @@
 			\begin{itemize}
 				\item Por
 			\end{itemize}
-				\begin{minted}[mathescape,linenos, numbersep=5pt, gobble=5, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
+				\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=5, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
 						/*q_p = msg_queues[my_rank]*/
 						omp_set_lock(&q_p->lock);
 						Dequeue(q_p, &src, &mesg);
@@ -839,10 +839,293 @@
 
 	\begin{frame}{Diretiva {\tt critical}, Diretiva {\tt atomic} ou lock}
 		\begin{itemize}
-			\item A diretiva {\tt atomic} é potencialmente mais rápido.
-			\item Consiste em atibuições únicas
+			\item A diretiva {\tt atomic} é potencialmente mais rápida para obter exclusão mútua.
+			\item Se a seção crítica consiste numa atribuição que querer uma forma, então utiliza-se tão bem o atomic quanto as outras.
+			\item Impões exclusão mútua a todas as diretivas {\tt atomic}. Essa é a forma que a {\tt critical} sem nomeação comporta.
+			\item Se isso pode ser um problema, por exemplo, ter várias seções críticas diferentes, então deve-se utilizar {\tt critical} nomeado ou locks.
 		\end{itemize}
 	\end{frame}
 
 
+	\begin{frame}[fragile]{Diretiva {\tt critical}, Diretiva {\tt atomic} ou lock}
+		\begin{itemize}
+			\item Supondo que cada um dos códigos abaixo é executado em duas threads diferenes
+		\end{itemize}
 
+		\begin{multicols}{2}
+				\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=5, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
+					#	pragma omp critical
+						x++;
+				\end{minted}
+		\columnbreak
+				\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=5, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
+					#	pragma omp critical
+						y++;
+				\end{minted}
+		\end{multicols}
+		\begin{itemize}
+			\item Mesmo se tiverem em locais de memória diferente, se uma thread executa o código a esquerda então nenhum outro executa a direita.
+			\item Entretanto, ambas as {\tt critical} (nomeadas e não nomeadas) são fácels de trabalhar.
+			\item Não existe uma diferença significativa entre a {\tt critical} e locks.
+			\begin{itemize}
+				\item Se não pode utilizar uma diretiva atômica, qualquer uma das duas satisfaz.
+			\end{itemize}
+			\item Locks deve ser usado quando é necessária a exclusão mútua para uma \textbf{estrutura de dados} em vez de um \textbf{bloco de código}.
+		\end{itemize}
+\end{frame}
+
+	\begin{frame}[fragile]{Ressalvas}
+		\begin{itemize}
+			\item Não deve juntar diferentes tipos de de exlusão para uma única seção.
+			\begin{multicols}{2}
+				\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=5, tabsize=3, frame=lines, framesep=2mm, fontsize=\normalsize]{c}
+					#	pragma omp atomic
+						x += f(y);
+				\end{minted}
+			\columnbreak
+				\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=5, tabsize=3, frame=lines, framesep=2mm, fontsize=\normalsize]{c}
+					#	pragma omp critical
+						x = g(x);
+				\end{minted}
+			\end{multicols}
+			\begin{itemize}
+				\item A atualização de {\tt x} à direita não tem uma forma definida pela diretiva {\tt atomic} e por isso utilizou o {\tt critical}.
+				\item O {\tt critical} não excluirá a ação do {\tt atomic} gerando possível resultados incorretos.
+				\item Deve-se reescrever a função {\tt g()} pra que seja da forma da diretiva {\tt atomic}, ou proteger ambos os blocos com {\tt critical}.
+			\end{itemize}
+		\end{itemize}
+\end{frame}
+
+	\begin{frame}[fragile]{Ressalvas}
+		\begin{itemize}
+			\item Não existe garantia de justiça na construção de exclusão mútua.
+			\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=4, tabsize=3, frame=lines, framesep=2mm, fontsize=\normalsize]{c}
+					while (1) {
+						...
+				#		pragma omp critical
+						x = g(my_rank);
+						...
+					}
+			\end{minted}
+			\begin{itemize}
+				\item Uma thread pode ser bloqueada pra sempre esperando a seção crítica.
+			\end{itemize}
+		\end{itemize}
+\end{frame}
+
+	\begin{frame}[fragile]{Ressalvas}
+		\begin{itemize}
+			\item Pode ser perigoso aninhar exclusões mútuas
+			\begin{itemize}
+				\item Isso é uma garantia para \textbf{deadlock}.
+				\item Quando uma thread tenta entrar na segunda seção crítica, ela fica bloqueada pra sempre.
+				\item Se uma thread $u$ está executando dentro da primeira seção crítica, nenhuma thread pode estar dentro da segunda.
+				\item A thread $u$ espera a segunda seção crítica e a thread $v$, dentro da segunda,  espera a primeira.
+			\end{itemize}
+
+			\begin{multicols}{2}
+				\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=5, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
+					#	pragma omp critical
+						y = f(x);
+						...
+						double f(double x) {
+					#		pragma omp critical
+							z = g(x); // z is shared
+						}
+				\end{minted}
+			\columnbreak
+				\pause
+				\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=5, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
+					#	pragma omp critical(one)
+						y = f(x);
+						...
+						double f(double x) {
+					#		pragma omp critical(two)
+							z = g(x); // z é global
+						}
+				\end{minted}
+			\end{multicols}
+		\end{itemize}
+\end{frame}
+
+	\begin{frame}[fragile]{Ressalvas}
+		\begin{multicols}{2}
+			\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=4, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
+				#	pragma omp critical
+					y = f(x);
+					...
+					double f(double x) {
+				#		pragma omp critical
+						z = g(x); // z is shared
+					}
+			\end{minted}
+		\columnbreak
+			\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=4, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
+				#	pragma omp critical(one)
+					y = f(x);
+					...
+					double f(double x) {
+				#		pragma omp critical(two)
+						z = g(x); // z é global
+					}
+			\end{minted}
+		\end{multicols}
+
+		\begin{figure}[p]
+			\centering
+			\includegraphics[width=0.6\textwidth]{img/pacheco/deadlock.png}
+			\caption{Deadlock.}
+		\end{figure}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+\section{Thread-Safefy}
+	\subsection{Introdução}
+	\begin{frame}[fragile]{Introdução}
+		\begin{itemize}
+			\item Outro problema que ocorre com o compartilhamento de memória é o thead-safety.
+			\item Um bloco de código é thread-safety se pode ser executado simultaneamente por várias threads sem causar problemas.
+			\item Um exemplo é múltiplas threads ``tokenizear'' um arquivo.
+			\item Uma abordagem seria dividir o arquivo em linhas de texto e colocar cada thread para executar com escalonamento round-robin.
+			\item Existindo $n$ linhas
+			\begin{itemize}
+				\item Thread 0 fica com $n$;
+				\item Thread 1 fica com $n+1$;
+				\item Thread t fica com $n+t$;
+				\item Thread 0 fica com $n+t+1$ e segue;
+			\end{itemize}
+		\end{itemize}
+\end{frame}
+
+	\begin{frame}[fragile]{Introdução}
+		\begin{itemize}
+			\item Existe a função {\tt strtok} no {\tt string.h}.
+			\item Ela retorna tokens de acordo com separador definido. Segue o seguinte protótipo
+		\end{itemize}
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
+			char * strtok(char* string /* in/out */, 
+						  const char * separators /* in */);
+		\end{minted}
+		\begin{itemize}
+			\item Seu uso é um pouco incomum
+			\begin{itemize}
+				\item Devemos passar a cadeia \verb%\t\n% como o argumento separadores dos tokens.
+				\item A primeira vez que ele é chamado, o argumento {\tt string} deve ser o texto a ser indexado.
+				\item Para chamadas subsequêntes, {\tt string} deverá ser NULL. 
+				\item Assim, na primeira chamada, {\tt strtok()} armazena o ponteiro e para chamadas seguintes ele retorna tokens de sucessivas tomadas a partir da cópia em cache.
+			\end{itemize}
+		\end{itemize}
+\end{frame}
+
+	\begin{frame}[fragile]
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
+			void Tokenize(
+					char* lines[] /* in/out */, int line count /* in */, int thread_count /* in */) {
+				int my_rank, i, j; char *my_token;
+			#	pragma omp parallel num_threads(thread_count) \ 
+						default(none) private(my_rank, i, j, my_token) \ 
+						shared(lines, line_count)
+				{
+					my_rank = omp_get_thread_num(); 
+			#		pragma omp for schedule(static, 1) 
+					for (i = 0; i < line_count; i++) {
+						printf("Thread %d > line %d = %s", my_rank, i, lines[i]);
+						j = 0;
+						my_token = strtok(lines[i], "\t\n");
+						while ( my_token != NULL ) {
+							printf("Thread %d > token %d = %s\n", my_rank, j, my_token);
+							my_token = strtok(NULL, " \t\n");
+							j++;
+						}
+					} /* for i */
+				} /* omp parallel */
+			} /* Tokenize */
+		\end{minted}
+\end{frame}
+
+	\begin{frame}[fragile]{Introdução}
+		\begin{itemize}
+			\item Executando a primeira vez o código com duas threads e com 4 entradas: ``Pease porridge hot.'' ``Pease porridge cold.'' ``Pease porridge in the pot'' ``Nine days old.''.
+			\begin{itemize}
+				\item Obtêm o resultado corretamente.
+			\end{itemize}
+
+			\item Ao executar pela segunda vez obtêm o seguinte resultado
+			\begin{verbatim}
+Thread 0 > line 0 = Pease porridge hot.
+Thread 1 > line 1 = Pease porridge cold.
+Thread 0 > token 0 = Pease
+Thread 1 > token 0 = Pease
+Thread 0 > token 1 = porridge
+Thread 1 > token 1 = cold.
+Thread 0 > line 2 = Pease porridge in the pot 
+Thread 1 > line 3 = Nine days old.
+Thread 0 > token 0 = Pease 
+Thread 1 > token 0 = Nine 
+Thread 0 > token 1 = days 
+Thread 1 > token 1 = old.
+			\end{verbatim}
+		\end{itemize}
+\end{frame}
+
+	\begin{frame}
+		\begin{itemize}
+			\item O que aconteceu?
+			\begin{itemize}
+				\item Apesar {\tt lines} ser argumento só de entrada, {\tt strtok} modifica o vetor.
+				\item Quando {\tt Tokenize} retornar o vetor {\tt lines} estará modificado pois {\tt strtok} armazena em cache a linha de entrada. 
+				\item {\tt strtok} armazena os valores numa variável estática persistindo-a. 
+				\item Essa persistência é `cache compartilhado'.
+				\item A thraead 0 encontrou um token ({\tt dias}) que deveria estar na saída da thraead 1.
+			\end{itemize}
+			\item Portanto, {\tt strtok} não é thread-safety.
+			\item Isso não é incomum nas funções das bibliotecas em C.
+			\begin{itemize}
+				\item Gerador de número randômico do {\tt stdlib.c} e a função de conversão de tempo local {time.c} também falham.
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\begin{itemize}
+			\item Em alguns casos o  padrão C especifica suplentes.	
+		\end{itemize}
+
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
+			char * strtok_r(char* string /* in/out */, 
+						  const char* separators /* in */, 
+						  char** saveptr_p /* in/out */);
+		\end{minted}
+
+		\begin{itemize}
+			\item {\tt \_r} significa reentrante. Também usado como sinônimo de thread-safe.
+			\item Mantém o controle de onde a função resolvendo o problema do cache.
+			\item trocar as chamadas de funções resolve o problema da nossa função.
+			\begin{itemize}
+				\item Devemos passar a cadeia \verb%\t\n% como o argumento separadores dos tokens.
+				\item A primeira vez que ele é chamado, o argumento {\tt string} deve ser o texto a ser indexado.
+				\item Para chamadas subsequêntes, {\tt string} deverá ser NULL. 
+				\item Assim, na primeira chamada, {\tt strtok()} armazena o ponteiro e para chamadas seguintes ele retorna tokens de sucessivas tomadas a partir da cópia em cache.
+			\end{itemize}
+		\end{itemize}
+\end{frame}
+
+	\begin{frame}{Programas incorretos podem produzir saídas corretas}
+		\begin{itemize}
+			\item Nosso primeiro código do tokenizer exibe armadilhas
+			\begin{itemize}
+				\item A primeira execução é correta.
+				\item Teve que executar novamente pra perceber o erro.
+			\end{itemize}
+			\item Isso não é raro em programas paralelos. Principalmente programas com memória compartilhada.
+		\end{itemize}
+\end{frame}
