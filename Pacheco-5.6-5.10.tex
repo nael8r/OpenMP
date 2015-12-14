@@ -1,20 +1,8 @@
-%				\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=5, tabsize=3, frame=lines, framesep=2mm, fontsize=\tiny]{vhdl}
-%					entity permutedChoice1 is
-%						port(
-%							-- Chave inicial
-%							bus64In 	: IN std_logic_vector(0 TO 63);
-%							-- Chave operada
-%							bus56Out    : OUT std_logic_vector(0 TO 55)
-%						);
-%					end permutedChoice1;
-%				\end{minted}
-
-\section{Exemplo}
-	\subsection{Ordenação}
+\section{Ordenação}
+	\subsection{Bubble Sort}
 		%5.6.1
-		\subsubsection{Bubble Sort}
-	\begin{frame}[fragile]{Bubble Sort}
-		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
+	\begin{frame}[fragile]{Bubble Sort - Loop-Carried Dependence}
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
 			for (list_length = n; list_length >= 2; list_length) 
 				for (i = 0; i < list_length - 1; i++)
 					if (a[i] > a[i+1]) { 
@@ -23,30 +11,22 @@
 						a[i+1] = tmp;
 					}
 		\end{minted}
-			\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=4, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
-				for (list_length = n; list_length >= 2; list_length) 
-					for (i = 0; i < list_length - 1; i++)
-						if (a[i] > a[i+1]) { 
-							tmp = a[i];
-							a[i] = a[i+1];
-							a[i+1] = tmp;
-						}
-			\end{minted}
-%				\columnbreak
+					\pause
+		\begin{itemize}
+			\item Existe uma dependência no loop externo
 			\begin{itemize}
-				\item Existe uma dependência no loop externo
-				\begin{itemize}
-					\item Em qualquer iteração o loop contém listas de dependência com iterações passadas.
-				\end{itemize}
-				\item Exemplo
-				\begin{itemize}
-					\item Se na primeira execução temos {\tt a = \{3, 4, 1, 2\}}, na segunda rodada teremos {\tt a = \{3, 1, 2, 4\}}.
-					\item O \texttt{4} é removido das próximas iterações.
-							\medskip
-					\item Se a segunda iteração executar primeiro, na próxima iteração o \texttt{4} estará disponível para permutação.
-				\end{itemize}
+				\item Em qualquer iteração, o loop contém listas de dependência com iterações passadas.
 			\end{itemize}
-%				\end{multicols}
+			\item Exemplo
+			\begin{itemize}
+				\item Se na primeira execução temos {\tt a = \{3, 4, 1, 2\}}, e na segunda teremos {\tt a = \{3, 1, 2, 4\}}.
+						\pause
+				\item O \texttt{4} \textbf{é removido das próximas iterações}.
+						\bigskip
+						\pause
+				\item Se a segunda iteração executar antes, na próxima iteração o \texttt{4} \textbf{estará disponível para permutação} sendo um erro de execução.
+			\end{itemize}
+		\end{itemize}
 \end{frame}
 
 
@@ -61,14 +41,16 @@
 					}
 		\end{minted}
 		\begin{itemize}
-			\item Existe outra dependência no loop interno
+			\setlength\itemsep{1em}
+			\item Não só no externo, mas existe outra dependência no loop interno
 			\begin{itemize}
 				\item Elementos da iteração $i$ também são utilizados na iteração $i-1$;
 			\end{itemize}
-			\item Exemplo
+			\item Exemplo de solução ao problema
 			\begin{itemize}
-				\item Se na iteração $i-1$ \textbf{não houver} troca entre {\tt a[i-1]} e {\tt a[i]} então {\tt a[i]} e {\tt a[i+1]} podem ser comparados.
-				\item Se na iteração $i-1$ \textbf{houver} troca entre {\tt a[i-1]} e {\tt a[i]} então {\tt a[i-1]} e {\tt a[i+1]} podem ser comparados.
+				\setlength\itemsep{0.5em}
+				\item Se na iteração $i-1$ \textbf{não houver} troca entre {\tt a[i-1]} e {\tt a[i]}, então {\tt a[i]} e {\tt a[i+1]} podem ser comparados.
+				\item Se na iteração $i-1$ \textbf{houver} troca entre {\tt a[i-1]} e {\tt a[i]}, então {\tt a[i-1]} e {\tt a[i+1]} podem ser comparados.
 			\end{itemize}
 		\end{itemize}
 \end{frame}
@@ -76,10 +58,14 @@
 			
 	\begin{frame}{Bubble Sort}
 		\begin{itemize}
-			\item Entretanto, isto não fica tão claro se formos reescrever o algoritmo sem as dependências.
-			\item Encontrar dependências é relativamente fácil. O difícil (ou impossível) é tratá-las.
+			\setlength\itemsep{1em}
+			\item Entretanto, reescrever o algoritmo não é algo fácil.
+			\item \textbf{Encontrar} dependências é relativamente fácil. 
+			\item O difícil (ou impossível) é tratá-las.
+					\bigskip
 			\item A diretiva {\tt parallel for} não é solução pra tudo.
-			\item O Algoritmo Bubble Sort não pode ser paralelisável utilizando esta diretiva.
+					\bigskip
+			\item O Algoritmo Bubble Sort \textbf{não pode ser paralelizável} utilizando esta diretiva.
 		\end{itemize}
 	\end{frame}
 
@@ -103,16 +89,24 @@
 					for (i = 1; i < n 1; i += 2)
 						if (a[i] > a[i+1]) Swap(&a[i], &a[i+1]);
 		\end{minted}
+				\pause
 		\begin{itemize}
-			\item Transposição ímpar-par.
-			\item Similar ao Bubble, mas com mais oportunidades de paralelismo.
-			\item Execução
+			\item Similar ao Bubble, mas com \textbf{mais oportunidades de paralelismo}.
+			\setlength\itemsep{0.3em}
 			\begin{itemize}
-				\item Par: Cada {\tt a[i]} ímpar é comparado com {\tt a[i-1]}. Se diferentes, são permutados.
-				\item Ímpar: Cada {\tt a[i]} ímpar é comparado com {\tt a[i+1]}. Se diferentes, são permutados.
+				\setlength\itemsep{0.2em}
+				\item \textbf{Par:} 
+				\begin{itemize}
+					\item Cada {\tt a[i]} ímpar é comparado com {\tt a[i-1]}. 
+					\item Se for menor, são permutados.
+				\end{itemize}
+				\item \textbf{Ímpar:} 
+				\begin{itemize}
+					\item Cada {\tt a[i]} ímpar é comparado com {\tt a[i+1]}. 
+					\item Se for maior, são permutados.
+				\end{itemize}
 			\end{itemize}
 			\item Depois de $n$ fases, a lista estará ordenada.
-			\item Pode ser paralelizável.
 		\end{itemize}
 \end{frame}
 
@@ -122,10 +116,12 @@
 			for (phase = 0; phase < n; phase++) 
 				if (phase % 2 == 0)
 					for (i = 1; i < n; i += 2)
-						if (a[i-1] > a[i]) Swap(&a[i-1],&a[i]); 
+						if (a[i-1] > a[i]) 
+							Swap(&a[i-1],&a[i]); 
 				else
 					for (i = 1; i < n 1; i += 2)
-						if (a[i] > a[i+1]) Swap(&a[i], &a[i+1]);
+						if (a[i] > a[i+1]) 
+							Swap(&a[i], &a[i+1]);
 			\end{minted}
 		\columnbreak
 			\begin{figure}[p]
@@ -147,21 +143,21 @@
 						if (a[i] > a[i+1]) Swap(&a[i], &a[i+1]);
 		\end{minted}
 		\begin{itemize}
-			\item Exemplo
-			\begin{itemize}
-				\item Tem-se o vetor {\tt a =\{9, 7, 8, 6\}}. 
-				\item Sequencial
-				\begin{itemize}
-					\item Na \textit{fase 0}: (9,7) e (8,6) resultando em \{7, 9, 6, 8\}.
-					\item Na \textit{fase 1}: (6, 9) são permutados.
-				\end{itemize}
-				\item Paralelo executará todas as fases concorrentemente.
-				\begin{itemize}
-					\item na \textit{fase1}, será comparado o par (7,8) e não o (6, 9).
-				\end{itemize}
-			\end{itemize}
-			\bigskip
+			\setlength\itemsep{0.4em}
 			\item Já o loop interno não aparenta ter dependências.
+					\bigskip
+			\item Já no externo... \pause Supondo o vetor {\tt a = \{9, 7, 8, 6\}}. 
+			\item Sequencial
+			\begin{itemize}
+				\setlength\itemsep{0.2em}
+				\item \textbf{\textit{Fase 0}:} (9,7) e (8,6) resultando no vetor {\tt a = \{7, 9, 6, 8\}}.
+				\item \textbf{\textit{Fase 1}:} (6, 9) são permutados.
+			\end{itemize}
+					\pause
+			\item Paralelo executará todas as fases concorrentemente.
+			\begin{itemize}
+				\item Assim, na \textit{fase 1}, será comparado o par (7,8) e não o (6, 9).
+			\end{itemize}
 		\end{itemize}
 \end{frame}
 
@@ -169,72 +165,91 @@
 			
 	\begin{frame}{Odd-Even Transposition Sort - Impasses}
 		\begin{itemize}
-			\item Por mais que os loops internos não tenham nenhum tipo de dependência, deve-se antentar ao loop externo.
-			\item Potencial 1:
+			\setlength\itemsep{1em}
+			\item Por mais que os loops internos não tenham nenhum tipo de dependência, deve-se atentar ao loop externo.
+			\item \textbf{Potencial 1:}
 			\begin{itemize}
-				\item Deve-se ter certeza que todas as threads da \textit{fase p} terminaram antes do início de \textit{fase p+1}.
-				\item Para que a diretiva {\tt parallel for} funcione, todos os threads de \textit{fase p} devem ter terminadas para a próxima iteração.
+				\item Para que a diretiva {\tt parallel for} funcione, deve-se ter certeza que todas as threads da \textit{fase p} terminaram antes do início de \textit{fase p+1}.
 			\end{itemize}
-			\item Potencial 2:
+			\item \textbf{Potencial 2:}
 			\begin{itemize}
 				\item \textit{Overhead} de \textit{forking} e \textit{joining} de threads.
 			\end{itemize}
+
+					\bigskip
+			\item Tem-se duas implementações paralelas sobre este algoritmo:
 		\end{itemize}
 	\end{frame}
 
 
 
 	\begin{frame}[fragile]{Odd-Even Transposition Sort - Implementação 1}
-		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\scriptsize]{c}
-			for (phase = 0; phase < n; phase++) { 
-				if (phase % 2 == 0)
-			#		pragma omp parallel for num_threads(thread_count) \ 
-						default(none) shared(a, n) private(i, tmp)
-					for(i=1;i<n;i+=2) { 
-						if (a[i-1] > a[i]) {
-							tmp = a[i-1]; 
-							a[i-1] = a[i]; 
-							a[i] = tmp;
-						} 
-					} else
-			#		pragma omp parallel for num_threads(thread_count) \
-						default(none) shared(a, n) private(i, tmp) 
-					for(i=1;i<n 1;i+=2) {
-						if (a[i] > a[i+1]) { 
-							tmp = a[i+1]; 
-							a[i+1] = a[i]; 
-							a[i] = tmp;
+		\begin{multicols}{2}
+			\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=4, tabsize=3, frame=lines, framesep=2mm, fontsize=\scriptsize]{c}
+				for (phase = 0; phase < n; phase++) { 
+					if (phase % 2 == 0)
+				#		pragma omp parallel for num_threads(thread_count) \ 
+							default(none) shared(a, n) private(i, tmp)
+						for(i=1;i<n;i+=2) { 
+							if (a[i-1] > a[i]) {
+								tmp = a[i-1]; 
+								a[i-1] = a[i]; 
+								a[i] = tmp;
+							} 
+						} else
+				#		pragma omp parallel for num_threads(thread_count) \
+							default(none) shared(a, n) private(i, tmp) 
+						for(i=1;i<n 1;i+=2) {
+							if (a[i] > a[i+1]) { 
+								tmp = a[i+1]; 
+								a[i+1] = a[i]; 
+								a[i] = tmp;
+							}
 						}
-					}
-			} 
-		\end{minted}
+				} 
+			\end{minted}
+		\columnbreak
+			\begin{itemize}
+				\setlength\itemsep{3em}
+				\item O {\tt for} externo não foi paralelizado.
+				\item Cada {\tt for} interno foi paralelizado separadamente.
+			\end{itemize}
+		\end{multicols}
 \end{frame}
 
 
 	\begin{frame}[fragile]{Odd-Even Transposition Sort - Implementação 2}
-		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\scriptsize]{c}
-			# 	pragma omp parallel num_threads(thread_count) \ 
-					default(none) shared(a, n) private(i, tmp, phase)
-			for (phase = 0; phase < n; phase++) { 
-				if (phase % 2 == 0)
-			#		pragma omp for
-					for(i=1;i<n;i+=2) { 
-						if (a[i-1] > a[i]) {
-							tmp = a[i-1]; 
-							a[i-1] = a[i]; 
-							a[i] = tmp;
-						} 
-					} else
-			#		pragma omp for
-					for(i=1;i<n 1;i+=2) {
-						if (a[i] > a[i+1]) { 
-							tmp = a[i+1]; 
-							a[i+1] = a[i]; 
-							a[i] = tmp;
+		\begin{multicols}{2}
+			\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=4, tabsize=3, frame=lines, framesep=2mm, fontsize=\scriptsize]{c}
+				# 	pragma omp parallel num_threads(thread_count) \ 
+						default(none) shared(a, n) private(i, tmp, phase)
+				for (phase = 0; phase < n; phase++) { 
+					if (phase % 2 == 0)
+				#		pragma omp for
+						for(i=1;i<n;i+=2) { 
+							if (a[i-1] > a[i]) {
+								tmp = a[i-1]; 
+								a[i-1] = a[i]; 
+								a[i] = tmp;
+							} 
+						} else
+				#		pragma omp for
+						for(i=1;i<n 1;i+=2) {
+							if (a[i] > a[i+1]) { 
+								tmp = a[i+1]; 
+								a[i+1] = a[i]; 
+								a[i] = tmp;
+							}
 						}
-					}
-			} 
-		\end{minted}
+				} 
+			\end{minted}
+		\columnbreak
+			\begin{itemize}
+				\setlength\itemsep{3em}
+				\item O algoritmo inteiro foi paralelizado.
+				\item Existe uma nova diretiva em cada {\tt for} interno.
+			\end{itemize}
+		\end{multicols}
 \end{frame}
 
 
@@ -242,17 +257,19 @@
 		\begin{figure}[p]
 			\centering
 			\includegraphics[width=0.5\textwidth]{img/pacheco/odd-even_comparation.png}
-			\caption{Comparação entre o mesmo algoritmo sobre diretivas diferentes.}
+			\caption{Comparação em segundos entre o mesmo algoritmo sobre diretivas diferentes.}
 		\end{figure}
 		\begin{itemize}
-			\item A diferença deve-se aos fatos
+			\setlength\itemsep{0.2em}
+			\item A diferença é pelo motivo
 			\begin{itemize}
-				\item O primeiro algoritmo realiza o \textit{forking} e \textit{joining} para cada iteração.
-				\item Já o segundo reutiliza as mesmas threads já que q quantidade é sempre a mesma.
+				\item O primeiro algoritmo realiza o \textit{forking} e \textit{joining} \textbf{para cada iteração}.
+				\item Já o segundo \textbf{reutiliza as mesmas threads} já que quantidade é sempre a mesma.
 			\end{itemize}
-			\item É possível criar um time de threads antes de loops com a diretiva {\tt parallel}.
-			\item A diretiva {\tt for}, diferentemente de {\tt parallel for}, não \textit{fork} nehuma threads. Ela utiliza threads já prontas para uso.
-			\item A segunda implementação obteve uma melhoria de $17\%$.
+					\bigskip
+			\item Assim, é possível criar um time de threads \textbf{antes de loops} com a diretiva {\tt parallel}.
+			\item A diretiva {\tt for}, diferentemente de {\tt parallel for}, \textbf{não \textit{fork} nenhuma threads}. Ela utiliza threads já prontas para uso.
+			\item A segunda implementação obteve uma melhoria de \textbf{$17\%$}.
 		\end{itemize}
 	\end{frame}
 
@@ -265,16 +282,19 @@
 
 	%5.7
 \section{Escalonamento de Loops}
-	\subsection{Escalonamento de Loops - Introdução}
+	\subsection{Escalonamento de Loops}
 	\begin{frame}[fragile]{Escalonamento de Loops - Introdução}
 		\begin{itemize}
-			\item A atribuição das iterações para as threads dependente do sistema.
-			\item OpenMP possui uma implementação robusta de particionamento de bloco:
+			\setlength\itemsep{0.3em}
+			\item A atribuição das iterações para as threads é dependente do sistema.
+			\item OpenMP possui uma implementação rude de particionamento de bloco:
 			\begin{itemize}
-				\item $n$ iterações. Então $n/${\tt thread\_count} iterações serão atribuído a thread 0.
-				\item Os próximos $n/${\tt thread\_count} serão atribuído a thread 1.
+				\item $n$ iterações. Então $n/${\tt thread\_count} iterações serão atribuído a thread 0, ou seja $n/t$.
+				\item Os próximos $n/${\tt thread\_count} serão atribuído a thread 1, ou seja $n/2t$.
+				\item Os próximos $n/${\tt thread\_count} serão atribuído a thread 2, ou seja $n/4t$.
 			\end{itemize}
-			\item Existem inúmeras situações onde isso seria muito pouco ideal.
+			\item Algumas atribuições de iteração de threads serão menos otimizadas.
+			\item Existem \textbf{inúmeras situações} onde isso \textbf{não seria ideal} tal como o exemplo abaixo.
 		\end{itemize}
 		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
 			sum = 0.0;
@@ -282,16 +302,17 @@
 				sum += f(i);
 		\end{minted}
 		\begin{itemize}
-			%\todo{O que isso quer dizer 237}
+			\setlength\itemsep{0.2em}
+			\item Supondo que o `esforço' da função {\tt f} \textbf{depende da grandeza de $|i|$}.
 			\item A divisão de blocos dará muito mais tarefas para a thread {\tt thread\_count} $-1$ do que a thread 0.
 		\end{itemize}
 \end{frame}
 
-	\begin{frame}{Escalonamento de Loops - Introdução}
+	\begin{frame}{Escalonamento de Loops - Round Robin}
 		\begin{itemize}
-			\item Uma melhor atribuição é utilizando particionamento cíclico.
+			\item Uma melhor atribuição é utilizando \textbf{particionamento cíclico}.
 			\begin{itemize}
-				\item A iteração é atribuída, uma em cada vez, no escalonamento ``round-robin''.
+				\item \textbf{A iteração é atribuída, uma em cada vez}, no escalonamento ``round-robin''.
 			\end{itemize}
 		\end{itemize}
 
@@ -302,47 +323,59 @@
 				\caption{Algoritmo de Escalonamento de Processo Round-Robin.}
 			\end{figure}
 		\columnbreak
+					\pause
 			\begin{figure}[p]
 				\centering
 				\includegraphics[width=0.5\textwidth]{img/pacheco/rr-threads.png}
-				\caption{Divisão das iterações com o algoritmo Round-Robin.}
+				\caption{Divisão das iterações com o algoritmo Round-Robin no exemplo acima.}
 			\end{figure}
 		\end{multicols}
 	\end{frame}
 
 	\begin{frame}[fragile]{Escalonamento de Loops - Comparação}
+		\begin{multicols}{2}
+			\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=4, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
+				sum = 0.0;
+				for (i = 0; i <= n; i++) 
+					sum += f(i);
+			\end{minted}
+		\columnbreak
+					\pause
+			\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=4, tabsize=3, frame=lines, framesep=2mm, fontsize=\scriptsize]{c}
+				double f(int i) {
+					int j, start = i*(i+1)/2, finish = start + i;
+					double return_val = 0.0;
+					for (j = start; j <= finish; j++) {
+						return val += sin(j);
+					}
+					return return_val; 
+				} /*f*/
+			\end{minted}
+		\end{multicols}
+
+
 		\begin{itemize}
-			\item Para ter noção de como isso afeta a performance, tem-se o seguinte programa
-		\end{itemize}
-		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\scriptsize]{c}
-			double f(int i) {
-				int j, start = i*(i+1)/2, finish = start + i;
-				double return_val = 0.0;
-				for (j = start; j <= finish; j++) {
-					return val += sin(j);
-				}
-				return return_val; 
-			} /*f*/
-		\end{minted}
-		\begin{itemize}
+			\setlength\itemsep{0.3em}
 			\item \textbf{Definição:} Se {\tt f(i)} leva tempo $i$, {\tt f(2i)} levará o dobro.
+					\pause
 			\item \textbf{Sem escalonamento cíclico} com $n=10.000$:
 			\begin{itemize}
 				\item Uma única thread, leva-se $3,57s$.
-				\item Duas threads, os blocos são divididos e leva-se $2,76s$. Speedup de 1,33.
+				\item Duas threads, os blocos são divididos e leva-se $2,76s$. \textit{Speedup}  de 1,33.
 			\end{itemize}
+					\pause
 			\item \textbf{Com escalonamento cíclico} com $n=10.000$
 			\begin{itemize}
-				\item Com 2 threads vai para $1,84s$. Speedup de 1,99 e 1,5 respectivamente.
+				\item Com 2 threads vai para $1,84s$. \textit{Speedup} de 1,99 e 1,5 respectivamente.
 			\end{itemize}
-			\item Existe a cláusula {\tt schedule} para diretivas {\tt for}.
+			\item Assim, existe a cláusula de escalonamento {\tt schedule} para diretivas {\tt for}.
 		\end{itemize}
 \end{frame}
 
 	\subsection{Cláusula {\tt schedule}}
 	\begin{frame}[fragile]{Cláusula {\tt schedule}}
 		\begin{itemize}
-			\item Escalonamento padrão usa-se a cláusula {\tt reduction} com algum {\tt for}.
+			\item Escalonamento padrão usa-se somente a cláusula {\tt reduction} com \textit{algum} {\tt for}
 		\end{itemize}
 		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
 			sum = 0.0;
@@ -353,7 +386,7 @@
 		\end{minted}
 
 		\begin{itemize}
-			\item Para um escalonamento cíclico utiliza-se a cláusula {\tt schedule}
+			\item Para um escalonamento cíclico utiliza-se também a cláusula {\tt schedule}
 		\end{itemize}
 		
 		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
@@ -367,47 +400,59 @@
 
 	\begin{frame}{Cláusula {\tt schedule}}
 		\begin{itemize}
-			\item Possui a forma {\tt schedule(<type> [, <chunksize>])} sendo:
-
-			\item O parâmetro {\tt type}
+			\setlength\itemsep{1em}
+			\item Possui a forma {\tt schedule(<type> [, <chunksize>])} sendo
+			\item \textbf{O parâmetro }{\tt type}
 			\begin{itemize}
-				\item {\tt static}: Iterações podem ser atribuídas antes da sua execução;
-				\item {\tt dynamic } ou {\tt guided}: Iterações podem ser atribuídas enquanto o loop é executado.
+				\setlength\itemsep{0.4em}
+				\item {\tt static}: Iterações podem ser atribuídas \textbf{antes da sua execução};
+				\item {\tt dynamic } ou {\tt guided}: Iterações podem ser atribuídas \textbf{enquanto o loop é executado}
 				\begin{itemize}
 					\item Se depois que uma thread é completada na iteração atual, pode requisitar mais em tempo de execução.
 				\end{itemize}
-				\item {\tt auto}: O compilador e sistema determinará o escalonamento.
-				\item {\tt runtime}: Será determinado em tempo de execução.
+
+				\item {\tt auto}: O \textbf{compilador e sistema determinará} o escalonamento.
+				\item {\tt runtime}: Será determinado \textbf{em tempo de execução}.
 			\end{itemize}
-			\item O parâmetro {\tt chunksize}
+
+			\item \textbf{O parâmetro} {\tt chunksize}
 			\begin{itemize}
-				\item Definição: \textit{chunk} de um iteração é um bloco de iterações que pode ser executado consecutivamente num loop serial.
-				\item Definição: {\tt chunksize} é o número de iterações no bloco.
+				\setlength\itemsep{0.4em}
+				\item \textbf{Definição:} \textit{chunk} de um iteração é \textbf{um bloco de iterações que pode ser executado num loop} serial.
+				\item \textbf{Definição:} {\tt chunksize} é o número de iterações no bloco.
 				\item Somente {\tt static}, {\tt dynamic} e {\tt guided} possuem essa opção.
 			\end{itemize}
 		\end{itemize}
 	\end{frame}
 
 	
-	\begin{frame}{Cláusula {\tt schedule} - Static}
+	\begin{frame}{Cláusula {\tt schedule} - {\tt static}}
 		\begin{itemize}
-			\item O sistema atribui iterações \textit{chunk} de {\tt chunksize} para cada thread por meio do RR.
+			\item O sistema atribui iterações \textit{chunk} de {\tt chunksize} para cada thread por meio do escalonamento cíclico.
+					\bigskip
 			\item Exemplo com 12 iterações ({\tt a = \{0, 1, ... , 11\})}
+					\pause
 			\begin{itemize}
+				\setlength\itemsep{0.5em}
 				\item \textbf{Se chunksize for 1} ({\tt schedule(static, 1)})
 				\begin{itemize}
+					\setlength\itemsep{0.3em}
 					\item \textbf{Thread 0:} 0, 3, 6, 9
 					\item \textbf{Thread 1:} 1, 4, 7, 10
 					\item \textbf{Thread 2:} 2, 5, 8, 11
 				\end{itemize}
+						\pause
 				\item \textbf{Se chunksize for 2} ({\tt schedule(static, 2)})
 				\begin{itemize}
+					\setlength\itemsep{0.3em}
 					\item \textbf{Thread 0:} 0, 1, 6, 7
 					\item \textbf{Thread 1:} 2, 3, 8, 9
 					\item \textbf{Thread 2:} 4, 5, 10, 11
 				\end{itemize}
+						\pause 
 				\item \textbf{Se chunksize for 4} ({\tt schedule(static, 4)})
 				\begin{itemize}
+					\setlength\itemsep{0.3em}
 					\item \textbf{Thread 0:} 0, 1, 2, 3
 					\item \textbf{Thread 1:} 4, 5, 6, 7
 					\item \textbf{Thread 2:} 8, 9, 10, 11
@@ -418,19 +463,22 @@
 	\end{frame}
 
 	
-	\begin{frame}{Cláusula {\tt schedule} - Dynamic e Guided}
+	\begin{frame}{Cláusula {\tt schedule} - {\tt dynamic} e {\tt guided}}
 		\begin{itemize}
-			\item Dynamic
+			\setlength\itemsep{1.2em}
+			\item \textbf{Dynamic}
 			\begin{itemize}
+				\setlength\itemsep{0.7em}
 				\item Iterações são quebradas em chunks de {\tt chunksize} de iterações consecutivas.
 				\item Cada thread executa um chunk e quando ela termina, ela requisita outro em tempo de execução.
 				\item Isso é executado até que as iterações sejam completadas.
 			\end{itemize}
-			\item Guided
+			\item \textbf{Guided}
 			\begin{itemize}
-				\item Tal como o Dynamic.
-				\item Quando um chunk é completado, o tramanho do novo chunk é decrementado.
-				\item Exemplo, no cálculo trapezoidal, se for calcular com intervalo de 10.000 e 2 threads: 
+				\setlength\itemsep{0.5em}
+				\item Tal como o {\tt dynamic}.
+				\item Quando um chunk é completado, o tamanho do novo chunk é decrementado.
+				\item Exemplo, de $n=10.000$ e 2 threads: 
 				\begin{itemize}
 					\item A primeira thread ficará com $9999/2 \approx 5000$;
 					\item A segunda ficará com $4999/2 \approx 2500$ e assim segue.
@@ -439,7 +487,7 @@
 		\end{itemize}
 	\end{frame}
 
-	\begin{frame}{Cláusula {\tt schedule} - Dynamic e Guided}
+	\begin{frame}{Cláusula {\tt schedule} - {\tt dynamic} e {\tt guided}}
 		\begin{figure}[p]
 			\centering
 			\includegraphics[width=0.52\textwidth]{img/pacheco/dynamic-guided.png}
@@ -447,11 +495,18 @@
 		\end{figure}
 	\end{frame}
 
-	\begin{frame}{Cláusula {\tt schedule} - runtime}
+	\begin{frame}{Cláusula {\tt schedule} - {\tt runtime}}
 		\begin{itemize}
-			\item Antes, deve-se definir variável de ambientem: Valores nomeados que podem ser acessados em tempo de execução. Disponívels no ambiente do programa.
+			\setlength\itemsep{1.5em}
+			\item Antes, deve-se definir variável de ambiente 
+			\begin{itemize}
+				\setlength\itemsep{0.8em}
+				\item Valores nomeados que podem ser acessados em tempo de execução. 
+				\item Disponível no ambiente do programa.
+			\end{itemize}
 			\item Quando {\tt schedule(runtime)} é especificado, o sistema utiliza a variável de ambiente {\tt OMP\_SCHEDULE}.
 			\begin{itemize}
+				\setlength\itemsep{0.8em}
 				\item Ela pode ter qualquer valor que poderia ser usado em {\tt static, dynamic}, ou {\tt guided}.
 				\item {\tt \$ export OMP\_SCHEDULE=``static,1''}
 			\end{itemize}
@@ -460,35 +515,43 @@
 
 	\begin{frame}{Cláusula {\tt schedule} - Como decidir?}
 		\begin{itemize}
-			\item Que tipo de escaolonamento e chunksize deveriamos usar?
+			\item Que tipo de escalonamento e chunksize deveríamos usar?
 					\bigskip
-			\item Como é possível perceber, existe alguns tipos de overheads em alguns tipos de escalonamento.
-			\item A sobrecarga é maior para dynamic do que static.
-			\item Há sobrecarga no guided em árvores.
-					\bigskip
-			\item Se deseja-se um desempenho satisfatório sem o uso de {\tt schedule}, deve-se ir além.
-			%\todo{Abordagens diferentes}
-			\item Caso contário, se achar que o escalonamento pode ser melhorado, deverá tentar abordagens diferentes.
-			\item Como no primeiro exemplo, se a melhoria de 1,99 de speed up é satisfatório, deve-se parar.
-			\item Entretanto, se for variar o número de threads e o número de iterações, deve ser experimentado outras possibilidades.
-			\item Achar o `ótimo escalonável' está diretamente relacionado ao número dde iterações e threads.
-					\bigskip
-			\item Se a performance do escalonador padrão não tiver aceitável, pode-se trocar o tipo de escaolonador
-			\begin{itemize}
-				\item Existe uma lista ampla de escalonadores.
-			\end{itemize}
-			\item Mesmmo assim, pode ter a possibilidade do loop não ser muito bem paralelizável ou nenhum escalonador dará a performace requerida.
+			\item Como é possível perceber, existe alguns tipos de overheads em alguns tipos de escalonamento
+			\begin{enumerate}
+				\item A sobrecarga é maior para dynamic do que static.
+				\item Há sobrecarga no guided em árvores.
+				\item Caso contrário, se achar que o escalonamento pode ser melhorado, deverá tentar abordagens diferentes.
+				\item Se deseja-se um desempenho satisfatório sem o uso de {\tt schedule}, deve-se ir além do uso de escalonamentos.
+			\end{enumerate}
+						\bigskip
+			\item Como no primeiro exemplo, se a melhoria de 1,99 de \textit{speedup} é satisfatório, deve-se parar.
+			\item Entretanto, se for variar o número de threads e o número de iterações, deve ser experimentado outras possibilidades. 
+			\item Achar o `ótimo escalonável' está diretamente relacionado ao número de iterações e threads.
 		\end{itemize}
 	\end{frame}
 
 	\begin{frame}{Cláusula {\tt schedule} - Explorar Escalonadores}
 		\begin{itemize}
+			\setlength\itemsep{1em}
+			\item Se a performance do escalonador padrão não tiver aceitável, pode-se trocar o tipo de escalonador
+			\begin{itemize}
+				\item Existe uma lista ampla de escalonadores.
+			\end{itemize}
 			\item Algumas ideias para explorar alguns escalonadores antes de outros
 			\begin{enumerate}
-				\item Se cada iteração exige a mesma quantidade de computação, então o padrão dará melhor performance.
+				\setlength\itemsep{0.8em}
+				\item Se cada iteração exige a \textbf{mesma quantidade de computação}, então o escalonador padrão dará melhor performance.
 				\item Se o custo das iterações cresce ou decresce de forma linear, então o {\tt static} com chunksize pequeno dará grande performance.
-				\item Se o custo não pode ser determinado, então pode-se fazer variações de escalonamento. O {\tt schedule(runtime)} também pode ser utilizado também.
+				\item Se o custo não pode ser determinado
+				\begin{itemize}
+				 	\item Pode-se fazer variações de escalonamento. 
+				 	\item O {\tt schedule(runtime)} também pode ser utilizado também.
+				 \end{itemize} 
 			\end{enumerate}
+					\bigskip
+					\pause
+			\item Mesmo assim, pode ter a possibilidade do loop `não ser muito bem paralelizável' ou nenhum escalonador dará a performance requerida.
 		\end{itemize}
 	\end{frame}
 
@@ -506,33 +569,32 @@
 			\item Um olhar sobre paralelismo em atividades que não são fáceis de lidar usando a diretiva {\tt parallel for} ou {\tt for}.
 			\bigskip
 			\item Fila é uma estrutura de dados natural usado em várias aplicações multithreads.
-			\begin{itemize}
-				\item Um exemplo é o produtor e consumidor.
-				\item Neste exemplo, o processo não pode ser terminado sem que todos os recursos não foram consumidos.
-			\end{itemize}
-			\item Troca de mensagem por memória compartilhada:
+			\item Em aplicações de troca de mensagem por memória compartilhada
 			\begin{itemize}
 				\item Cada thread deve ter uma fila de memória compartilhada.
-				\item Quando uma thread quer enviar uma mensagem para outra thread, `enfilera' a mensagem na fila do destinatário.
-			\end{itemize}
-			\item Supondo um implementação simples de troca de mensagem no qual
-			\begin{itemize}
-				\item Cada thread irá gerar um número inteiro randômico que serão as mensagens;
-				\item E um número randômico de destinatários.
-				\item Passos:
-				\begin{enumerate}
-					\item Depois de criado as mensagens, cada thread checará sua própria lista de mensagens;
-					\item Se tiver mensangem, retira da fila e imprime na na tela;
-					\item Cada thread alternará entre tentar enviar e receber mensagens;
-					\item O usuário definirá o número de mensagens que cada thread deve enviar;
-					\item Quando uma thread enviar todas as mensangens, ela ficará recebendo mensagens até que todas acabarem também e serão fechadas.
-				\end{enumerate}
+				\item Quando uma thread envia uma mensagem, `enfilera' a mensagem na fila do destinatário.
 			\end{itemize}
 		\end{itemize}
 	\end{frame}
 
 	\begin{frame}[fragile]{Troca de Mensagem -  Pseudocódigo}
-		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\normalsize]{c}
+		\begin{itemize}
+			\item Supondo um implementação simples de troca de mensagem no qual
+			\begin{itemize}
+				\item Cada thread irá gerar um número inteiro randômico que serão as mensagens;
+				\item E um número randômico de destinatários.
+			\end{itemize}
+			\item Passos:
+			\begin{enumerate}
+				\item Depois de criado as mensagens, cada thread checará sua própria lista de mensagens;
+				\item Se tiver mensagem, retira da fila e imprime na na tela;
+				\item Cada thread alternará entre tentar enviar e receber mensagens;
+				\item O usuário definirá o número de mensagens que cada thread deve enviar;
+				\item Quando uma thread enviar todas as mensagens, ela ficará recebendo mensagens até que todas acabarem também e serão fechadas.
+			\end{enumerate}
+		\end{itemize}
+				\pause
+		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\scriptsize]{c}
 			for (sent_msgs = 0; sent_msgs < send_max; sent_msgs++) { 
 				Send_msg();
 				Try_receive();
@@ -550,10 +612,10 @@
 			\item Pseudocódigo do {\tt Send\_msg()}
 		\end{itemize}
 		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\normalsize]{c}
-			mesg = random();
-			dest = random() % thread_count;
+				mesg = random();
+				dest = random() % thread_count;
 			#	pragma omp critical
-			Enqueue(queue, dest, my_rank, mesg);
+				Enqueue(queue, dest, my_rank, mesg);
 		\end{minted}
 		\begin{itemize}
 			\item É permitido que a thread envie mensagem pra si mesmo.

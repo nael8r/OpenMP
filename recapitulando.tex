@@ -1,0 +1,25 @@
+\section{Recapitulando}
+		%5.6.1
+	\begin{frame}[fragile]{Recapitulando sobre OpenMP}
+		\begin{itemize}
+			\item Inserção do cabeçalho {\tt omp.h}
+			\item Forma de uso {\tt \#\quad pragma omp $<$diretivas$>$}
+		\end{itemize}
+				\pause
+		\begin{table}
+		    \begin{tabular}{l|l}
+		    \hline
+		    \textbf{Principais Diretivas}           & \textbf{Diretivas de Partilha de Dados}                             \\ \hline
+		    {\tt parallel                } & {\tt default(shared | none)                              } \\
+		    {\tt num\_threads($<$inteiro$>$)} & {\tt shared($<$lista\_de\_variaveis$>$)                  } \\
+		    {\tt parallel for            } & {\tt private($<$lista\_de\_variaveis$>$)                 } \\
+		    {\tt for                     } & {\tt reduction($<$operadores$>$: $<$lista\_de\_variaveis$>$)} \\ \hline \hline
+
+		   \textbf{ Diretivas de Sincronização}     & \textbf{Funções da Biblioteca} $<$omp.h$>$   \\ \hline
+
+			{\tt critical                } & {\tt omp\_get\_thread\_num()      } \\
+			{\tt ~                       } & {\tt omp\_get\_num\_threads()     } \\ \hline
+		    \end{tabular}
+		\end{table}
+\end{frame}
+
