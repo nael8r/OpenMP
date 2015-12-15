@@ -1,7 +1,7 @@
 \section{Ordenação}
 	\subsection{Bubble Sort}
 		%5.6.1
-	\begin{frame}[fragile]{Bubble Sort - Loop-Carried Dependence}
+	\begin{frame}[fragile]{Bubble Sort}
 		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\footnotesize]{c}
 			for (list_length = n; list_length >= 2; list_length) 
 				for (i = 0; i < list_length - 1; i++)
@@ -368,12 +368,12 @@
 			\begin{itemize}
 				\item Com 2 threads vai para $1,84s$. \textit{Speedup} de 1,99 e 1,5 respectivamente.
 			\end{itemize}
-			\item Assim, existe a diretiva de escalonamento {\tt schedule} para diretivas {\tt for}.
+			\item Assim, existe a cláusula de escalonamento {\tt schedule} para diretivas {\tt for}.
 		\end{itemize}
 \end{frame}
 
-	\subsection{Diretiva {\tt schedule}}
-	\begin{frame}[fragile]{Diretiva {\tt schedule}}
+	\subsection{Cláusula {\tt schedule}}
+	\begin{frame}[fragile]{Cláusula {\tt schedule}}
 		\begin{itemize}
 			\item Escalonamento padrão usa-se somente a diretiva {\tt reduction} com \textit{algum} {\tt for}
 		\end{itemize}
@@ -386,7 +386,7 @@
 		\end{minted}
 
 		\begin{itemize}
-			\item Para um escalonamento cíclico utiliza-se também a diretiva {\tt schedule}
+			\item Para um escalonamento cíclico utiliza-se também a cláusula {\tt schedule}
 		\end{itemize}
 		
 		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\small]{c}
@@ -398,7 +398,7 @@
 		\end{minted}
 \end{frame}
 
-	\begin{frame}{Diretiva {\tt schedule}}
+	\begin{frame}{Cláusula {\tt schedule}}
 		\begin{itemize}
 			\setlength\itemsep{1em}
 			\item Possui a forma {\tt schedule(<type> [, <chunksize>])} sendo
@@ -426,7 +426,7 @@
 	\end{frame}
 
 	
-	\begin{frame}{Diretiva {\tt schedule} - {\tt static}}
+	\begin{frame}{Cláusula {\tt schedule} - {\tt static}}
 		\begin{itemize}
 			\item O sistema atribui iterações \textit{chunk} de {\tt chunksize} para cada thread por meio do escalonamento cíclico.
 					\bigskip
@@ -463,7 +463,7 @@
 	\end{frame}
 
 	
-	\begin{frame}{Diretiva {\tt schedule} - {\tt dynamic} e {\tt guided}}
+	\begin{frame}{Cláusula {\tt schedule} - {\tt dynamic} e {\tt guided}}
 		\begin{itemize}
 			\setlength\itemsep{1.2em}
 			\item \textbf{Dynamic}
@@ -487,7 +487,7 @@
 		\end{itemize}
 	\end{frame}
 
-	\begin{frame}{Diretiva {\tt schedule} - {\tt dynamic} e {\tt guided}}
+	\begin{frame}{Cláusula {\tt schedule} - {\tt dynamic} e {\tt guided}}
 		\begin{figure}[p]
 			\centering
 			\includegraphics[width=0.52\textwidth]{img/pacheco/dynamic-guided.png}
@@ -495,7 +495,7 @@
 		\end{figure}
 	\end{frame}
 
-	\begin{frame}{Diretiva {\tt schedule} - {\tt runtime}}
+	\begin{frame}{Cláusula {\tt schedule} - {\tt runtime}}
 		\begin{itemize}
 			\setlength\itemsep{1.5em}
 			\item Antes, deve-se definir variável de ambiente 
@@ -504,7 +504,7 @@
 				\item Valores nomeados que podem ser acessados em tempo de execução. 
 				\item Disponível no ambiente do programa.
 			\end{itemize}
-			\item Quando {\tt schedule(runtime)} é especificado, o sistema utiliza a variável de ambiente {\tt OMP\_SCHEDULE}.
+			\item Cláusula {\tt schedule(runtime)} é especificado, o sistema utiliza a variável de ambiente {\tt OMP\_SCHEDULE}.
 			\begin{itemize}
 				\setlength\itemsep{0.8em}
 				\item Ela pode ter qualquer valor que poderia ser usado em {\tt static, dynamic}, ou {\tt guided}.
@@ -513,7 +513,7 @@
 		\end{itemize}
 	\end{frame}
 
-	\begin{frame}{Diretiva {\tt schedule} - Como decidir?}
+	\begin{frame}{Cláusula {\tt schedule} - Como decidir?}
 		\begin{itemize}
 			\item Que tipo de escalonamento e chunksize deveríamos usar?
 					\bigskip
@@ -531,7 +531,7 @@
 		\end{itemize}
 	\end{frame}
 
-	\begin{frame}{Diretiva {\tt schedule} - Explorar Escalonadores}
+	\begin{frame}{Cláusula {\tt schedule} - Explorar Escalonadores}
 		\begin{itemize}
 			\setlength\itemsep{1em}
 			\item Se a performance do escalonador padrão não tiver aceitável, pode-se trocar o tipo de escalonador
@@ -797,7 +797,7 @@
 	\begin{frame}[fragile]{Troca de Mensagem -  Lock}
 		\begin{itemize}
 			\item Lock consistem de estruturas de dados e funções que permitem o programador explicitar a exclusão mútua numa seção crítica.
-			\item O uso do lock pode ser descrito pelo seguinte pseudocódigo:
+			\item O uso do lock pode ser descrito pelo seguinte pseudo-código:
 		\end{itemize}
 		\begin{minted}[mathescape,linenos, numbersep=3pt, gobble=3, tabsize=3, frame=lines, framesep=2mm, fontsize=\scriptsize]{c}
 			/* Executed by one thread */
@@ -825,7 +825,7 @@
 		\end{itemize}
 \end{frame}
 
-	\begin{frame}{Diretiva {\tt schedule} - Lock}
+	\begin{frame}{Cláusula {\tt schedule} - Lock}
 		\begin{figure}[p]
 			\centering
 			\includegraphics[width=1\textwidth]{img/pacheco/mutex.png}
@@ -833,7 +833,7 @@
 		\end{figure}
 	\end{frame}
 
-	\begin{frame}{Diretiva {\tt schedule} - Lock}
+	\begin{frame}{Cláusula {\tt schedule} - Lock}
 		\begin{figure}[p]
 			\centering
 			\includegraphics[width=1\textwidth]{img/pacheco/mutex2.png}
