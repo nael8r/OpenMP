@@ -102,11 +102,11 @@
 		\end{minted}
 \end{frame}
 
-\section{Diretivas e Funções}
+\section{Diretivas, Cláusulas e Funções}
 
-\begin{frame}{Diretivas e Funções}
+\begin{frame}{Diretivas, Cláusulas e Funções}
 	\begin{itemize}
-		\item Novas diretivas que serão vistas:
+		\item Novas diretivas e cláusulas que serão vistas:
 		\medskip
 		\begin{itemize}
 			\item \texttt{firstprivate} e \texttt{lastprivate}
@@ -161,7 +161,7 @@
 	\end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{Diretivas - firstprivate}
+\begin{frame}[fragile]{Cláusulas - firstprivate}
 	\begin{columns}
 		\column{0.3\linewidth}
 		\begin{itemize}
@@ -195,7 +195,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Diretivas - firstprivate}
+\begin{frame}[fragile]{Cláusulas - firstprivate}
 	\begin{itemize}
 		\item Usa-se então a diretiva \texttt{firstprivate}:
 		\medskip
@@ -215,7 +215,7 @@
 	\end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{Diretivas - lastprivate}
+\begin{frame}[fragile]{Cláusulas - lastprivate}
 	\begin{itemize}
 		\item Podemos querer retornar um valor calculado na última iteração de um \textit{loop}, armazenado em uma variável privada, para a \textit{thread} mestre.
 	\end{itemize}
@@ -242,7 +242,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Diretivas - lastprivate}
+\begin{frame}[fragile]{Cláusulas - lastprivate}
 	\begin{itemize}
 		\item Usando a diretiva \texttt{lastprivate}:
 	\end{itemize}
@@ -366,7 +366,7 @@
 	\end{columns}
 \end{frame}
 
-\begin{frame}{Diretivas - nowait}
+\begin{frame}{Cláusulas - nowait}
 	\begin{itemize}
 		\item A diretiva \texttt{parallel} faz com que o compilador imponha uma barreira de sincronização.
 		\medskip
@@ -382,7 +382,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Diretivas - nowait}
+\begin{frame}[fragile]{Cláusulas - nowait}
 		\begin{minted}[mathescape, linenos, numbersep=3pt, gobble=2, tabsize=4, frame=lines, framesep=2mm, fontsize=\footnotesize]{c++}
 		#pragma omp parallel private(i,j,low,high)
 		for (i = 0; i < m; i++)

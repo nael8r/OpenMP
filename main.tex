@@ -1,6 +1,6 @@
 \documentclass[10pt, aspectratio=169]{beamer} %Tamanho da fonte alterado de 12pt (eu acho) para 10pt
 
-\usetheme{metropolis} % Tema Utilizado
+\usetheme[block=fill]{metropolis} % Tema Utilizado
 
 %\renewcommand{\raggedright}{\leftskip=0pt \rightskip=0pt plus 0cm} % Justificação global do texto
 
@@ -20,7 +20,7 @@
 \usepackage{mathtools} % setas com texto
 \usepackage{multicol} % multicolunas num único slide
 %\usepackage{listingsutf8}
-\usepackage{minted} % Highlight de codigos
+\usepackage[outputdir="./build"]{minted} % Highlight de codigos
 \usepackage{scalefnt}
 \usepackage{ragged2e}
 \usepackage{etoolbox, verbatim}
@@ -62,6 +62,7 @@
 \maketitle
 
 \begin{frame}{Sumário}
+	\fontsize{8pt}{7.2}\selectfont
   \tableofcontents[hideallsubsections]
 \end{frame}
 \include{recapitulando}
