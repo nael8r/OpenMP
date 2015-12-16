@@ -226,7 +226,7 @@
 			\end{itemize}
 		\column{0.7\linewidth}
 		\begin{minted}[mathescape, linenos, numbersep=3pt, gobble=2, tabsize=4, frame=lines, framesep=2mm, fontsize=\footnotesize]{c++}
-		#pragma omp parallel for private(j)
+		#pragma omp parallel for private(j,x)
 		for (i=0; i < n; i++)
 		{
 			x[0] = 1.0;
@@ -286,7 +286,7 @@
 	\end{columns}
 	\fontsize{8pt}{7.2}\selectfont
 	\begin{itemize}
-		\item \textbf{Questão:} Podemos paralelizar \textbf{as iterações} do \textit{loop} mais externo?
+		\item \textbf{Questão:} Podemos paralelizar \textbf{as iterações} do \textit{loop} mais externo com a diretiva \texttt{parallel for}?
 		\pause
 		\medskip
 		\item {\color{bostonuniversityred} Não, existe o comando \textbf{break} no código, o que não caracteriza um \textbf{bloco estruturado de código}.}
@@ -547,8 +547,8 @@
 %	\end{itemize}
 %\end{frame}
 
-\begin{frame}[fragile]{Exemplo - Hello World}
-	\begin{minted}[mathescape, linenos, numbersep=3pt, gobble=2, tabsize=4, frame=lines, framesep=2mm, fontsize=\fontsize{8.5}{7.2}\selectfont]{c++}
+\begin{frame}[fragile]{Exemplo - Hello World\footnote{\url{https://www.slac.stanford.edu/comp/unix/farm/mpi_and_openmp.html}}}
+	\begin{minted}[mathescape, linenos, numbersep=3pt, gobble=2, tabsize=4, frame=lines, framesep=2mm, fontsize=\fontsize{8.5}{6.9}\selectfont]{c++}
 		#include <stdio.h>
 		#include "mpi.h"
 		#include <omp.h>
